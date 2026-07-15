@@ -34,29 +34,29 @@ export default function LoginForm({ onSwitchToSignup }: LoginFormProps) {
 
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
-    await new Promise((r) => setTimeout(r, 1200));
 
-    const validCredentials = [
-      { email: 'akpandit1211@gmail.com', password: 'Amar123', role: 'Student' },
-      { email: 'amardipkumarpr172@gmail.com', password: 'Amar123', role: 'Admin' },
-    ];
-
-    const match = validCredentials.find(
-      (c) => c.email === data.email && c.password === data.password
-    );
-
-    if (!match) {
-      setIsLoading(false);
-      setError('email', { message: '' });
-      setError('password', {
-        message: 'Invalid credentials — use the demo accounts below to sign in',
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
       });
-      return;
-    }
+      const result = await response.json();
 
-    toast.success(`Welcome back! Signed in as ${match.role}`);
-    setIsLoading(false);
-    router.push('/dashboard');
+      if (!response.ok) {
+        const message = typeof result.error === 'string' ? result.error : 'Invalid credentials';
+        setError('password', { message });
+        setIsLoading(false);
+        return;
+      }
+
+      toast.success(`Welcome back, ${result.user.fullName}`);
+      setIsLoading(false);
+      router.push('/dashboard');
+    } catch (error) {
+      setError('password', { message: 'Unable to sign in. Please try again.' });
+      setIsLoading(false);
+    }
   };
 
   const handleAutofill = (email: string, password: string) => {
@@ -124,9 +124,13 @@ export default function LoginForm({ onSwitchToSignup }: LoginFormProps) {
             <label htmlFor="login-password" className="block text-sm font-semibold text-foreground">
               Password
             </label>
-            <a href="#" className="text-xs text-primary font-medium hover:underline">
+            <button
+              type="button"
+              className="text-xs text-primary font-medium hover:underline"
+              onClick={() => router.push('/forgot-password')}
+            >
               Forgot password?
-            </a>
+            </button>
           </div>
           <div className="relative">
             <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />

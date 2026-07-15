@@ -70,6 +70,20 @@ module.exports = {
         'card-hover': '0 4px 12px 0 rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04)',
         modal: '0 20px 60px -10px rgba(0,0,0,0.20)',
       },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(12px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(14px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        pulseHighlight: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '.6' },
+        },
+      },
       animation: {
         'fade-in': 'fadeIn 200ms ease forwards',
         'slide-up': 'slideUp 300ms ease forwards',

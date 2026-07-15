@@ -18,9 +18,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'ExamForge — Practice Smarter, Rank Higher',
+  title: 'ExamPeakAI — Intelligent Exam Prep',
   description:
-    'ExamForge is an enterprise-grade question bank and online exam platform for SSC, UPSC, Banking, and Railways aspirants — practice mock tests, track accuracy, and climb leaderboards.',
+    'ExamPeakAI is a modern exam prep platform with adaptive mock tests, AI analytics, and curated practice paths for aspirants.',
   icons: {
     icon: [{ url: '/favicon.ico', type: 'image/x-icon' }],
   },

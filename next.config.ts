@@ -8,9 +8,7 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  turbopack: {},
   images: {
     remotePatterns: imageHosts as RemotePattern[],
     minimumCacheTTL: 60,

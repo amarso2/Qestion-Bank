@@ -49,11 +49,29 @@ export default function SignUpForm({ onSwitchToLogin }: SignUpFormProps) {
   const onSubmit = async (data: SignUpFormData) => {
     if (!selectedCategory) return;
     setIsLoading(true);
-    // Backend integration point: POST /api/auth/register
-    await new Promise((r) => setTimeout(r, 1400));
-    toast.success('Account created! Welcome to ExamPeakAI 🎉');
-    setIsLoading(false);
-    router.push('/dashboard');
+
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        const message = typeof result.error === 'string' ? result.error : 'Unable to create account';
+        toast.error(message);
+        setIsLoading(false);
+        return;
+      }
+
+      toast.success('Account created! Welcome to ExamPeakAI 🎉');
+      setIsLoading(false);
+      router.push('/dashboard');
+    } catch (error) {
+      toast.error('Signup failed. Please try again.');
+      setIsLoading(false);
+    }
   };
 
   return (

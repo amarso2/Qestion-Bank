@@ -10,6 +10,7 @@ import {
   BookMarked,
   Trophy,
   ArrowUpRight,
+  Bell,
 } from 'lucide-react';
 import Badge from '@/components/ui/Badge';
 
@@ -88,9 +89,36 @@ function LiveExamCountdown() {
 export default function DashboardRightPanel() {
   const [activeSection, setActiveSection] = useState<'recommended' | 'weak' | 'leaderboard'>('recommended');
 
+  const notifications = [
+    { id: 'note-1', title: 'Mock review ready', message: 'Your latest SSC mock is now available.', time: '5m ago' },
+    { id: 'note-2', title: 'Deadline approaching', message: 'Daily revision plan due at 9pm.', time: '45m ago' },
+    { id: 'note-3', title: 'New challenge', message: 'Try the reasoning speed drill now.', time: '2h ago' },
+  ];
+
   return (
     <div className="space-y-5">
       <LiveExamCountdown />
+
+      <div className="card-elevated bg-white dark:bg-slate-900 border border-border dark:border-slate-700 p-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-xs uppercase tracking-[0.25em] text-blue-600">Notifications</p>
+            <p className="mt-2 text-sm font-semibold text-foreground dark:text-slate-100">Latest alerts</p>
+          </div>
+          <Bell size={18} className="text-muted-foreground" />
+        </div>
+        <div className="mt-4 space-y-3">
+          {notifications.map((note) => (
+            <div key={note.id} className="rounded-3xl bg-muted dark:bg-slate-800 border border-border dark:border-slate-700 p-3">
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-sm font-semibold text-foreground dark:text-slate-100">{note.title}</p>
+                <span className="text-[11px] text-muted-foreground dark:text-slate-400">{note.time}</span>
+              </div>
+              <p className="mt-1 text-sm text-muted-foreground dark:text-slate-400">{note.message}</p>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Section tabs */}
       <div className="flex bg-muted rounded-xl p-0.5">
