@@ -16,7 +16,7 @@ export async function POST(request: Request) {
   }
 
   const passwordHash = await hashPassword(parsed.data.password);
-  await updatePasswordReset(user._id.toString(), passwordHash);
+  await updatePasswordReset(user._id, passwordHash);
 
   return NextResponse.json({ ok: true });
 }

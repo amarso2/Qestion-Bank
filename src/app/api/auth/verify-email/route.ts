@@ -19,7 +19,7 @@ export async function GET(request: Request) {
   await updateUserVerification(user._id.toString());
 
   const jwtToken = createJwtToken({
-    userId: user._id.toString(),
+    userId: user._id,
     email: user.email,
     role: user.role,
     isEmailVerified: true,

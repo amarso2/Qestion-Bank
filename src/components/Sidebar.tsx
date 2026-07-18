@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import AppLogo from '@/components/ui/AppLogo';
+import LogoutButton from '@/components/LogoutButton';
 import {
   LayoutDashboard,
   BookOpen,
@@ -14,7 +15,6 @@ import {
   ChevronRight,
   Bell,
   HelpCircle,
-  LogOut,
   Target,
   Clock,
   Users,
@@ -206,8 +206,8 @@ export default function Sidebar({ collapsed, onToggle, activeRoute }: SidebarPro
           );
         })}
 
-        {/* User profile */}
-        <div className={`flex items-center gap-2.5 mt-2 px-2 py-2 rounded-lg hover:bg-muted transition-colors cursor-pointer ${collapsed ? 'justify-center' : ''}`}>
+        {/* User profile and logout */}
+        <div className={`flex items-center gap-2.5 mt-2 px-2 py-2 rounded-lg hover:bg-muted transition-colors ${collapsed ? 'justify-center' : ''}`}>
           <div className="w-8 h-8 rounded-full gradient-primary flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
             RA
           </div>
@@ -218,11 +218,14 @@ export default function Sidebar({ collapsed, onToggle, activeRoute }: SidebarPro
             </div>
           )}
           {!collapsed && (
-            <button className="btn-ghost p-1" aria-label="Log out">
-              <LogOut size={14} className="text-muted-foreground" />
-            </button>
+            <LogoutButton collapsed={collapsed} className="p-1" />
           )}
         </div>
+        {collapsed && (
+          <div className="px-2 py-2">
+            <LogoutButton collapsed={collapsed} className="mb-0.5" />
+          </div>
+        )}
       </div>
     </aside>
   );

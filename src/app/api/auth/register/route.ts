@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { signupSchema } from '@/lib/validators';
-import { findUserByEmail, getUserCollection, hashPassword, createRandomToken, createJwtToken } from '@/lib/auth';
+import { findUserByEmail, createUser, hashPassword, createRandomToken, createJwtToken } from '@/lib/auth';
 import { sendVerificationEmail } from '@/lib/email';
 
 export async function POST(request: Request) {
@@ -20,8 +20,7 @@ export async function POST(request: Request) {
   const verificationToken = createRandomToken();
   const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24);
 
-  const users = await getUserCollection();
-  const result = await users.insertOne({
+  const user = await createUser({
     fullName: parsed.data.fullName,
     email: parsed.data.email.toLowerCase(),
     phone: parsed.data.phone,
@@ -40,7 +39,7 @@ export async function POST(request: Request) {
   await sendVerificationEmail(parsed.data.email, verificationToken);
 
   const token = createJwtToken({
-    userId: result.insertedId.toString(),
+    userId: user._id,
     email: parsed.data.email.toLowerCase(),
     role: 'student',
     isEmailVerified: false,

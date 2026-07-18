@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { requestPasswordResetSchema } from '@/lib/validators';
-import { findUserByEmail, getUserCollection, createRandomToken } from '@/lib/auth';
+import { findUserByEmail, createRandomToken, setPasswordResetToken } from '@/lib/auth';
 import { sendPasswordResetEmail } from '@/lib/email';
 
 export async function POST(request: Request) {
@@ -19,17 +19,7 @@ export async function POST(request: Request) {
   const resetToken = createRandomToken();
   const expiresAt = new Date(Date.now() + 1000 * 60 * 60);
 
-  const users = await getUserCollection();
-  await users.updateOne(
-    { _id: user._id },
-    {
-      $set: {
-        passwordResetToken: resetToken,
-        passwordResetTokenExpires: expiresAt,
-        updatedAt: new Date(),
-      },
-    }
-  );
+  await setPasswordResetToken(user._id, resetToken, expiresAt);
 
   await sendPasswordResetEmail(parsed.data.email, resetToken);
   return NextResponse.json({ ok: true });

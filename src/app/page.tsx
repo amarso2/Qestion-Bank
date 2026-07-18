@@ -84,16 +84,16 @@ export default function HomePage() {
 
           <div className="flex items-center gap-3">
             <a
-              href="#"
+              href="/sign-up-login-screen"
               className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-blue-300 hover:text-blue-600"
             >
-              Log in
+              Preview UI
             </a>
             <a
-              href="#"
+              href="/dashboard"
               className="rounded-full bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition hover:bg-blue-700"
             >
-              Start free
+              Open dashboard
             </a>
           </div>
         </div>

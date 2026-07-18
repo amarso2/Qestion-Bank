@@ -87,14 +87,13 @@ export default function DashboardTopBar() {
 
         <button
           type="button"
-          onClick={async () => {
-            await fetch('/api/auth/logout', { method: 'POST' });
-            window.location.href = '/sign-up-login-screen';
+          onClick={() => {
+            window.location.href = '/';
           }}
           className="btn-ghost p-2.5"
-          aria-label="Logout"
+          aria-label="Back home"
         >
-          Logout
+          Home
         </button>
       </div>
     </div>

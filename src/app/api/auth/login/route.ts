@@ -20,7 +20,7 @@ export async function POST(request: Request) {
   }
 
   const token = createJwtToken({
-    userId: user._id.toString(),
+    userId: user._id,
     email: user.email,
     role: user.role,
     isEmailVerified: user.isEmailVerified,
